@@ -2,43 +2,58 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:background="#0099cc"
+             android:layout_gravity="center_horizontal"
              tools:context="com.example.sophiataskova.webingo.FullscreenActivity">
-    <!-- The primary full-screen view. This can be replaced with whatever view
-         is needed to present your content, e.g. VideoView, SurfaceView,
-         TextureView, etc. -->
-    <TextView
-        android:id="@+id/fullscreen_content"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        android:textColor="#33b5e5"
-        android:textStyle="bold"
-        android:textSize="50sp"
-        android:gravity="center"
-        android:text="@string/dummy_content" />
-    <!-- This FrameLayout insets its children based on system windows using
-         android:fitsSystemWindows. -->
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="true">
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal">
         <LinearLayout
-            android:id="@+id/fullscreen_content_controls"
-            style="?metaButtonBarStyle"
-            android:layout_width="match_parent"
+            android:id="@+id/row_labels"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|center_horizontal"
-            android:background="@color/black_overlay"
-            android:orientation="horizontal"
-            tools:ignore="UselessParent">
-            <Button
-                android:id="@+id/dummy_button"
-                style="?metaButtonBarButtonStyle"
-                android:layout_width="0dp"
+            android:gravity="center"
+            android:orientation="vertical">
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/dummy_button" />
+                style="@style/LargeAccentLetter"
+                app:typeface="roboto_light_italic"
+                android:text="B" />
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LargeAccentLetter"
+                app:typeface="roboto_light_italic"
+                android:text="I" />
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LargeAccentLetter"
+                app:typeface="roboto_light_italic"
+                android:text="N" />
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LargeAccentLetter"
+                app:typeface="roboto_light_italic"
+                android:text="G" />
+            <com.devspark.robototextview.widget.RobotoTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/LargeAccentLetter"
+                app:typeface="roboto_light_italic"
+                android:text="O" />
         </LinearLayout>
-    </FrameLayout>
+        <include
+            layout="@layout/bingo_grid"
+            android:id="@+id/grid"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@id/row_labels"
+            android:layout_toEndOf="@id/row_labels" />
+    </RelativeLayout>
 </FrameLayout>
