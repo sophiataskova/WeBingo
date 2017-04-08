@@ -15,10 +15,19 @@
         <item name="metaButtonBarButtonStyle">?android:attr/buttonBarButtonStyle</item>
     </style>
     <style name="LargeLetter">
-        <item name="android:textSize">40sp</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:layout_width">80dp</item>
+        <item name="android:layout_height">80dp</item>
+        <item name="android:layout_marginBottom">20dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+
     </style>
     <style name="LargeAccentLetter" parent="LargeLetter">
-        <item name="android:textColor">@color/colorAccent</item>
+        <item name="android:textColor">@color/colorPrimaryDark</item>
+        <item name="android:background">@drawable/circle</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:layout_margin">10dp</item>
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
     </style>
 </resources>
