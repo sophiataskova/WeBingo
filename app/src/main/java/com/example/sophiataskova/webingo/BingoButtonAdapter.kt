@@ -5,10 +5,8 @@ import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-
-
-
-
+import com.example.sophiataskova.webingo.FullscreenActivity.Companion.currentBingoNumber
+import com.example.sophiataskova.webingo.FullscreenActivity.Companion.selectedBingoNumbers
 
 
 class BingoButtonAdapter() : Adapter<BingoButtonAdapter.ViewHolder>() {
@@ -19,15 +17,21 @@ class BingoButtonAdapter() : Adapter<BingoButtonAdapter.ViewHolder>() {
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder!!.mTextView.text = mDataset!![position];
+        holder?.mTextView?.text = mDataset?.get(position)
+        holder?.mTextView?.setOnClickListener {
+            if (currentBingoNumber.substring(1). equals(holder?.mTextView?.text)) {
+                holder?.mTextView?.setBackgroundResource(R.drawable.red_circle_w_inner_circle)
+                selectedBingoNumbers = selectedBingoNumbers.plusElement(currentBingoNumber)
+            }
+        }
     }
 
     override fun getItemCount(): Int {
-        return mDataset!!.size
+        return mDataset?.size as Int
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
-        val v = LayoutInflater.from(parent!!.context)
+        val v = LayoutInflater.from(parent?.context)
                 .inflate(R.layout.bingo_number, parent, false) as TextView
         val vh = ViewHolder(v)
         return vh

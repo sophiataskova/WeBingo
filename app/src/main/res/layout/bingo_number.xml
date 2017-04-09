@@ -4,5 +4,5 @@
                                                    xmlns:tools="http://schemas.android.com/tools"
                                                    android:orientation="vertical"
                                                    style="@style/LargeAccentLetter"
-                                                   app:typeface="roboto_light_italic"
+                                                   app:typeface="roboto_slab_bold"
                                                    tools:text="2" />
