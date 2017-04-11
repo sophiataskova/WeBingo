@@ -53,28 +53,36 @@ class FullscreenActivity : AppCompatActivity() {
         mAdapter = BingoButtonAdapter(bingoCard.toTypedArray())
         (mRecyclerView as RecyclerView).adapter = mAdapter
 
-        (mBingoButton as Button).setOnClickListener {
-            if (checkForBingo()) {
-                winBingo()
-            }
-        }
+        newGame()
     }
 
     private fun winBingo() {
-        mBingoButton?.setTextColor(ContextCompat.getColor(this, R.color.redApple))
-        mBingoButton?.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent))
-
         CommonConfetti.rainingConfetti(mContentView, intArrayOf(Color.BLACK))
                 .stream(2000)
+        newGame()
+    }
+
+    private fun newGame() {
+        (mCurrentNumberTV as TextView).text = "READY?"
+        mBingoButton?.setTextColor(ContextCompat.getColor(this, R.color.redApple))
+        mBingoButton?.setBackgroundColor(ContextCompat.getColor(this, R.color.colorAccent))
         mBingoButton?.text = "NEW GAME"
 
-        mBingoButton?.setOnClickListener { resetBoard() }
+        mBingoButton?.setOnClickListener {
+            resetBoard()
+            scheduleShowBingoNumbers()
+        }
     }
 
     private fun resetBoard() {
         mBingoButton?.setTextColor(ContextCompat.getColor(this, R.color.colorAccent))
         mBingoButton?.setBackgroundColor(ContextCompat.getColor(this, R.color.redApple))
         mBingoButton?.text = "BINGO!"
+        (mBingoButton as Button).setOnClickListener {
+            if (checkForBingo()) {
+                winBingo()
+            }
+        }
 
         bingoCard = generateRandomBingoCard()
         mAdapter = BingoButtonAdapter(bingoCard.toTypedArray())
@@ -83,23 +91,18 @@ class FullscreenActivity : AppCompatActivity() {
         mAdapter?.notifyDataSetChanged()
     }
 
-    override fun onResume() {
-        super.onResume()
-        (mCurrentNumberTV as TextView).text = "READY?"
-        scheduleShowBingoNumbers()
-    }
-
     fun scheduleShowBingoNumbers() {
         val handler = Handler()
         handler.postDelayed(object : Runnable {
             override fun run() {
-                currentBingoNumber = getBingoNumToShow()
+                currentNumber = getBingoNumToShow()
+                currentBingoNumber = numberToBingoNumber(currentNumber)
                 (mCurrentNumberTV as TextView).text = currentBingoNumber
 
                 speakerbox?.play(currentBingoNumber)
                 handler.postDelayed(this, 5000)
             }
-        }, 5000)
+        }, 0)
     }
 
     override fun onPause() {
@@ -109,8 +112,9 @@ class FullscreenActivity : AppCompatActivity() {
 
     companion object {
         var currentBingoNumber: String = "READY?"
-        var bingoCard : Set<String> = LinkedHashSet<String>()
-        var selectedBingoNumbers: Set<String> = LinkedHashSet<String>()
+        var currentNumber: Int = 0
+        var bingoCard : Set<Int> = LinkedHashSet<Int>()
+        var selectedBingoNumbers: Set<Int> = LinkedHashSet<Int>()
     }
 
 

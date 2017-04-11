@@ -23,8 +23,8 @@ fun getBingoEntriesForLetter(s: String, r: IntRange) : List<String> {
     return result
 }
 
-fun generateRandomBingoCard() : Set<String> {
-    var resultSet = LinkedHashSet<String>()
+fun generateRandomBingoCard() : Set<Int> {
+    var resultSet = LinkedHashSet<Int>()
     for (range in RANGES) {
         resultSet.addAll(chooseKUniqueElementsFromRange(5, range))
     }
@@ -66,43 +66,43 @@ fun checkForBingo() : Boolean {
     }
 
     return (0..20 step 5).any { (selectedBingoNumbers.contains(bingoCard.elementAt(it))) &&
-            (selectedBingoNumbers.contains(bingoCard.elementAt(it +1))) &&
-            (selectedBingoNumbers.contains(bingoCard.elementAt(it +2))) &&
-            (selectedBingoNumbers.contains(bingoCard.elementAt(it +3))) &&
-            (selectedBingoNumbers.contains(bingoCard.elementAt(it +4))) }
+            (selectedBingoNumbers.contains(bingoCard.elementAt(it + 1))) &&
+            (selectedBingoNumbers.contains(bingoCard.elementAt(it + 2))) &&
+            (selectedBingoNumbers.contains(bingoCard.elementAt(it + 3))) &&
+            (selectedBingoNumbers.contains(bingoCard.elementAt(it + 4))) }
 }
 
 /**
  * Theoretically, this could run infinitely
  */
-fun chooseKUniqueElementsFromRange(k:Int, r: IntRange) : Set<String> {
-    val result = LinkedHashSet<String>()
+fun chooseKUniqueElementsFromRange(k:Int, r: IntRange) : Set<Int> {
+    val result = LinkedHashSet<Int>()
 
     val random = SecureRandom()
 
     while (result.size.compareTo(k) < 0) {
-        result.add((r.elementAt(random.nextInt(r.last - r.first))).toString())
+        result.add((r.elementAt(random.nextInt(r.last - r.first))))
     }
     return result
 }
 
-fun getBingoNumToShow() : String {
-    var bingoNumber: String = ""
-    val number: Int
-    val divideBy: Long = 1000
-    number = (System.currentTimeMillis()/divideBy).toInt() % 75
+fun getBingoNumToShow() : Int {
+    val divideBy: Long = 4000
+    return (((System.currentTimeMillis()/divideBy * 3) + (System.currentTimeMillis()-7)) % 75).toInt()
+}
 
-    if (number < 15) {
+fun numberToBingoNumber(number: Int): String {
+    var bingoNumber = ""
+    if (number in 1..15) {
         bingoNumber = "B" + number
-    } else if (number <= 30) {
+    } else if (number in 16..30) {
         bingoNumber = "I" + number
-    } else if (number <= 45) {
+    } else if (number in 31..45) {
         bingoNumber = "N" + number
-    } else if (number <= 60) {
+    } else if (number in 46..60) {
         bingoNumber = "G" + number
-    } else if (number <= 75) {
+    } else if (number in 60..75) {
         bingoNumber = "O" + number
     }
-
     return bingoNumber
 }

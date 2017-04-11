@@ -5,23 +5,23 @@ import android.support.v7.widget.RecyclerView.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.sophiataskova.webingo.FullscreenActivity.Companion.currentBingoNumber
+import com.example.sophiataskova.webingo.FullscreenActivity.Companion.currentNumber
 import com.example.sophiataskova.webingo.FullscreenActivity.Companion.selectedBingoNumbers
 
 
 class BingoButtonAdapter() : Adapter<BingoButtonAdapter.ViewHolder>() {
-    private var mDataset: Array<String>? = null
+    private var mDataset: Array<Int>? = null
 
-    constructor(dataset: Array<String>) : this() {
+    constructor(dataset: Array<Int>) : this() {
         this.mDataset = dataset
     }
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
-        holder?.mTextView?.text = mDataset?.get(position)
+        holder?.mTextView?.text = mDataset?.get(position).toString()
         holder?.mTextView?.setOnClickListener {
-            if (currentBingoNumber.substring(1). equals(holder?.mTextView?.text)) {
+            if (currentNumber.equals(Integer.parseInt(holder?.mTextView?.text as String))) {
                 holder?.mTextView?.setBackgroundResource(R.drawable.red_circle_w_inner_circle)
-                selectedBingoNumbers = selectedBingoNumbers.plusElement(currentBingoNumber)
+                selectedBingoNumbers = selectedBingoNumbers.plusElement(currentNumber)
             }
         }
     }
