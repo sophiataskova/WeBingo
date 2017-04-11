@@ -103,6 +103,9 @@ fun numberToBingoNumber(number: Int): String {
         bingoNumber = "G" + number
     } else if (number in 60..75) {
         bingoNumber = "O" + number
+    } else {
+        // todo eliminate 0
+        BingoApplication.instance?.toast("Number was " + number)
     }
     return bingoNumber
 }
