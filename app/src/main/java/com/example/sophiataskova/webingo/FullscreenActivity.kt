@@ -6,11 +6,9 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
+import android.widget.*
 import com.github.jinatonic.confetti.CommonConfetti
 import com.mapzen.speakerbox.Speakerbox
 import org.jetbrains.anko.find
@@ -26,11 +24,10 @@ class FullscreenActivity : AppCompatActivity() {
     private var mRecyclerView: RecyclerView? = null
     private var mCurrentNumberTV: TextView? = null
     private var mContentView: ViewGroup? = null
-    private var mAdapter: RecyclerView.Adapter<*>? = null
+    private var mAdapter: ListAdapter? = null
     private var mBingoButton: Button? = null
     private var mLayoutManager: RecyclerView.LayoutManager? = null
     var mTellerHandle: ScheduledFuture<*>? = null
-    val speakerbox: Speakerbox? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,14 +41,10 @@ class FullscreenActivity : AppCompatActivity() {
         mCurrentNumberTV = find(R.id.current_bingo_number)
         mBingoButton = find(R.id.bingo)
 
-        (mRecyclerView as RecyclerView).setHasFixedSize(true)
-        mLayoutManager = GridLayoutManager(this, 5) as RecyclerView.LayoutManager?
-        (mRecyclerView as RecyclerView).layoutManager = mLayoutManager
-
         bingoCard = generateRandomBingoCard()
 
         mAdapter = BingoButtonAdapter(bingoCard.toTypedArray())
-        (mRecyclerView as RecyclerView).adapter = mAdapter
+        (mRecyclerView as GridView).adapter = mAdapter
 
         newGame()
     }
@@ -99,7 +92,6 @@ class FullscreenActivity : AppCompatActivity() {
                 currentBingoNumber = numberToBingoNumber(currentNumber)
                 (mCurrentNumberTV as TextView).text = currentBingoNumber
 
-                speakerbox?.play(currentBingoNumber)
                 handler.postDelayed(this, 5000)
             }
         }, 0)
